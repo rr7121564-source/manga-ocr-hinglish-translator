@@ -2,7 +2,6 @@ package com.example.mangaocr.data.local
 
 import android.app.Application
 import android.net.Uri
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
 import java.io.File
 import java.util.zip.ZipFile
 
@@ -12,9 +11,14 @@ class ZipImporter(private val app: Application) {
         val outputDir = File(app.cacheDir, "manga_extracted")
         outputDir.mkdirs()
 
-        val inputStream = app.contentResolver.openInputStream(uri) ?: throw Exception("Cannot open file")
-        val zipFile = ZipFile(File.createTempFile("manga", ".zip", app.cacheDir))
-        
+        val tempZip = File.createTempFile("manga", ".zip", app.cacheDir)
+        app.contentResolver.openInputStream(uri)?.use { input ->
+            tempZip.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        val zipFile = ZipFile(tempZip)
         zipFile.entries().asSequence().forEach { entry ->
             val outputFile = File(outputDir, entry.name)
             outputFile.parentFile?.mkdirs()
@@ -27,6 +31,7 @@ class ZipImporter(private val app: Application) {
                 }
             }
         }
+        zipFile.close()
         
         return outputDir.absolutePath
     }

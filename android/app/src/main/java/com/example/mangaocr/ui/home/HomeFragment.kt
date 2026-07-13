@@ -1,6 +1,5 @@
 package com.example.mangaocr.ui.home
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,7 +42,6 @@ class HomeFragment : Fragment() {
             zipPickerLauncher.launch("application/zip")
         }
 
-        // Observe import progress
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.importProgress.collect { progress ->
                 binding.progressBar.progress = progress
@@ -51,7 +49,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Observe import status
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.importStatus.collect { status ->
                 binding.textStatus.text = status

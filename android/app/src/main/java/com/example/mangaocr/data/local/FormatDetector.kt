@@ -1,7 +1,6 @@
 package com.example.mangaocr.data.local
 
 import android.graphics.BitmapFactory
-import java.io.File
 
 class FormatDetector {
 
