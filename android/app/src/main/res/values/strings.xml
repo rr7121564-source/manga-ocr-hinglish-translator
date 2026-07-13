@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Manga OCR Hinglish</string>
+    <string name="import_zip">Import ZIP</string>
+    <string name="processing">Processing...</string>
+    <string name="import_success">Import Successful</string>
+    <string name="import_error">Import Failed</string>
+</resources>
